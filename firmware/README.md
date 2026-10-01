@@ -1,8 +1,33 @@
-# 固件与加载器准备
+# 一键准备固件
 
-仓库只附原始 `manifest.json`，不附固件二进制。目标为 `QDC507GLEFM21_01.001.02.004`；来源和授权状态见 [SOURCES.md](../docs/SOURCES.md) 与 [NOTICE.md](../NOTICE.md)。
+在项目根目录运行：
 
-准备后的目录必须是：
+```bash
+./prepare-firmware.command
+```
+
+也可以在 Finder 中双击 `prepare-firmware.command`。需要 Python 3.9 或更新版本；不需要 Docker、libusb，也不需要连接模块。
+
+工具从原作者公开镜像下载包含管理程序的固定数据层，约 **55 MiB**，再静态提取目标固件 **`QDC507GLEFM21_01.001.02.004`（V01.01.0204）**。它不会启动容器、执行原管理程序或访问 USB。镜像层、管理程序、清单及六份载荷都会核对固定大小和 SHA-256。
+
+准备完成后：
+
+```bash
+./setup.sh
+./qdc507 verify-firmware
+```
+
+固件已完整且校验通过时，再次运行会直接跳过下载。管理程序保存在 `.firmware-cache/`，缺少固件时可从已校验的缓存重新提取；固件及缓存均已加入 Git 忽略规则，不随本仓库分发。来源和版权说明见 [SOURCES.md](../docs/SOURCES.md) 与 [NOTICE.md](../NOTICE.md)。
+
+## 遇到问题
+
+- 下载失败或中断：检查网络后重新运行；临时下载会清理，不支持断点续传。原镜像需要可访问，本文不保证未来仍可下载。
+- 缓存校验失败：删除 `.firmware-cache/dji-fw-manager` 后重新运行。
+- 已有固件内容不匹配：工具会停止且不会覆盖。先保留现有文件，再将冲突文件移出 `firmware/update/` 后重试；不要修改固定哈希绕过校验。
+
+## 已有文件或离线准备
+
+已有匹配的六份文件时，将 `update/` 放到本目录下，保持结构：
 
 ```text
 firmware/
@@ -17,30 +42,10 @@ firmware/
         └── prog_nand_firehose_9x07.mbn
 ```
 
-## 已有匹配的文件
-
-如已有这六份文件，将 `update/` 放到本目录下，保持路径不变。工具核对大小和 SHA-256；没有匹配的加载器不能升级。
-
-## 从指定管理程序静态提取
-
-也可以准备来源镜像内的 Linux amd64 `/app/dji-fw-manager`，再在 macOS 运行：
+也可以在其他机器取得指定镜像中的 Linux amd64 `/app/dji-fw-manager`，传回 Mac 后离线提取：
 
 ```bash
 python3 tools/extract_firmware.py /路径/dji-fw-manager
 ```
 
-脚本先核对管理程序的大小与固定 SHA-256，仅读取其内嵌数据，不执行程序。全部文件与仓库清单一致才写入；已有不同内容的文件会导致停止，已有相同内容的文件保持原样。新文件先写入临时文件并同步，再以不覆盖已有目标的方式创建。只有本文记录的 0.1.0 管理程序受支持，不接受未知版本或任意固件。
-
-如果使用装有 Docker 的机器取得管理程序，可以创建但不启动容器后复制文件。以下命令不启动管理服务，不挂载 USB：
-
-```bash
-docker pull --platform linux/amd64 canghaiwuhen/dji-qdc507-firmware-manager@sha256:c087fab8bfab282b04265e6ce9e2da753819d4956ecc15e82d1ecf8ecb1b34a2
-docker create --platform linux/amd64 --name qdc507-asset-copy canghaiwuhen/dji-qdc507-firmware-manager@sha256:c087fab8bfab282b04265e6ce9e2da753819d4956ecc15e82d1ecf8ecb1b34a2
-docker cp qdc507-asset-copy:/app/dji-fw-manager ./dji-fw-manager
-docker rm qdc507-asset-copy
-python3 tools/extract_firmware.py ./dji-fw-manager
-```
-
-Docker 只是在这里获取管理程序的一种办法，macOS 刷写本身不需要 Docker。如在另一台机器取得文件，将程序传回 Mac 再静态提取即可。镜像下载需要网络，本文未保证未来仍可访问。
-
-完成后运行 `./setup.sh` 与 `./qdc507 verify-firmware`。不要把取得的固件、加载器或管理程序加入 GitHub；本仓库没有为它们授予再分发许可，`.gitignore` 已忽略这些本地文件。
+只接受来源记录中的 0.1.0 管理程序；全部内嵌文件校验通过才写入，已有相同内容的文件保持原样，已有不同内容的文件会导致停止。无匹配的 Firehose 加载器不能备份或升级。

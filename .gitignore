@@ -8,6 +8,7 @@ backups/
 vendor/edl/edl_config.json
 vendor/edl/log.txt
 firmware/update
+.firmware-cache/
 dji-fw-manager
 *.bin
 *.mbn

@@ -35,11 +35,14 @@ brew install libusb
 
 `setup.sh` 在项目目录创建 `.venv/` 并安装依赖。`inspect` 不需要固件文件。
 
-本仓库不分发第三方固件或加载器。按 [固件准备说明](firmware/README.md) 准备 `firmware/update/` 后运行：
+备份或升级前，在项目根目录运行以下命令，或在 Finder 中双击 `prepare-firmware.command`：
 
 ```bash
+./prepare-firmware.command
 ./qdc507 verify-firmware
 ```
+
+固件准备工具从原作者公开镜像下载约 55 MiB 数据，自动静态提取并校验，无需 Docker，也不访问 USB。已有完整固件时跳过下载。本仓库不分发第三方固件或加载器；离线准备和故障处理见 [固件准备说明](firmware/README.md)。
 
 固件清单、文件大小或 SHA-256 不匹配时，工具会停止。不要修改固定哈希绕过检查。
 
@@ -86,7 +89,7 @@ White-Alone 原文中的 DJI 设备界面说明：V01.01.0204 支持 APN 自适�
 .venv/bin/python -B -m unittest discover -v
 ```
 
-测试覆盖固件和身份校验、双份备份一致性、任务复用、NAND 擦写边界、USB 传输错误和回读验证。
+测试覆盖固件下载与缓存校验、固件和身份校验、双份备份一致性、任务复用、NAND 擦写边界、USB 传输错误和回读验证。
 测试使用临时文件与模拟 USB，不操作真实模块。未准备 `firmware/update/` 时，真实固件文件校验测试会明确跳过；准备完整文件后该项会执行。
 
 ## 来源、许可证与致谢

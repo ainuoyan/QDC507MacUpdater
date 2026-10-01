@@ -14,6 +14,6 @@ python3 -m venv .venv
 if [[ -d firmware/update ]]; then
   .venv/bin/python qdc507.py verify-firmware
 else
-  echo '尚未准备固件：可以运行 inspect；备份和升级前请按 firmware/README.md 准备文件。'
+  echo '尚未准备固件：可以运行 inspect；备份和升级前运行 ./prepare-firmware.command。'
 fi
 echo '准备完成。运行 ./qdc507 inspect 检查模块。'

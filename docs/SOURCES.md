@@ -9,6 +9,7 @@
 - 镜像索引摘要：`sha256:bf0afe1b5bcd3ac01b3b4d1fb993f8b2992e6bcebd54a8584f70a74936b367db`
 - Linux amd64 manifest：`sha256:c087fab8bfab282b04265e6ce9e2da753819d4956ecc15e82d1ecf8ecb1b34a2`
 - 配套 EDL 所在层：`sha256:be017854d032974f07885290ffc4082d8f2955245cefe178c675e4b2af8b000b`
+- 管理程序所在层：`sha256:3eb0f67192fcf4e29c41f3d1740266d35c963192e41fbecc99ac0169deab4ddf`（57,404,289 字节）
 - 管理程序位置：`/app/dji-fw-manager`
 - 管理程序 SHA-256：`c8b0c8192c8f35c81f665711e0331a56e173157f2a9f715024f21ce85e123465`
 - 内嵌固件目录：`assets/firmware/qdc507-01.001.02.004/`
@@ -16,7 +17,7 @@
 
 提取工具仅读取指定管理程序的 ELF/Go 内嵌数据，不执行该程序；输出清单、五个分区及一个加载器，逐项校验大小和 SHA-256。准备方法见 [固件说明](../firmware/README.md)。
 
-镜像不是 DJI 官方下载入口。这些摘要用于固定来源和文件内容，不代表厂商签名或认证，也不证明二进制的再分发许可。镜像标签可能变化，因此固件说明使用固定 manifest 摘要。
+镜像不是 DJI 官方下载入口。这些摘要用于固定来源和文件内容，不代表厂商签名或认证，也不证明二进制的再分发许可。镜像标签可能变化，因此一键准备工具直接下载固定摘要的数据层，不跟随标签更新。下载通过 [Registry API](https://distribution.github.io/distribution/spec/api/) 和 [Docker Registry 认证接口](https://docs.docker.com/reference/api/registry/auth/) 完成，不需要 Docker 客户端。
 
 ## EDL 原作者与本地适配
 
