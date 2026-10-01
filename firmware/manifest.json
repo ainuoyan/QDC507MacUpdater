@@ -1,0 +1,114 @@
+{
+  "format": 1,
+  "model": "QDC507",
+  "target_firmware": "QDC507GLEFM21_01.001.02.004",
+  "created_at": "2026-07-19T20:24:19.686353867+08:00",
+  "geometry": {
+    "page_size": 2048,
+    "pages_per_block": 64,
+    "total_blocks": 1024
+  },
+  "sources": [
+    {
+      "file": "source-1-full-nand.bin",
+      "size": 134217728,
+      "sha256": "d61aee17f0651e1db0ed79efd6df678a29cff1f79ed9900f83280fdfdc68f109"
+    },
+    {
+      "file": "source-2-full-nand.bin",
+      "size": 134217728,
+      "sha256": "bdfc909a8d9a82d557168cfe0cd027a058f353cc806df934e8105caf38238d96"
+    }
+  ],
+  "loader": {
+    "file": "update/firehose/prog_nand_firehose_9x07.mbn",
+    "size": 128376,
+    "sha256": "2e32df166a2d67facf500db19e1b741d11d1f183aa8decb2c944319da88a41b6"
+  },
+  "partitions": [
+    {
+      "name": "RAWDATA",
+      "edl_name": "rawdata",
+      "file": "update/RAWDATA.bin",
+      "offset": 23855104,
+      "size": 524288,
+      "sha256": "746a92c475574d0bef52303730ced3ab45f46cec886781a17a538440a6f2f81a"
+    },
+    {
+      "name": "aboot",
+      "edl_name": "aboot",
+      "file": "update/aboot.bin",
+      "offset": 27787264,
+      "size": 1310720,
+      "sha256": "befbddd6153a94373c0114e68838ecb11c5d85d9378dd9e0ae31cd77bd0ea1a4"
+    },
+    {
+      "name": "boot",
+      "edl_name": "boot",
+      "file": "update/boot.bin",
+      "offset": 29097984,
+      "size": 5636096,
+      "sha256": "a1c4b790f638a2b1a0464ccd6fcad03ab7691ffdc7005cd81d3b2d31abb6a372"
+    },
+    {
+      "name": "recoveryfs",
+      "edl_name": "recoveryfs",
+      "file": "update/recoveryfs.bin",
+      "offset": 35258368,
+      "size": 5505024,
+      "sha256": "e618a2537a8712f9a891fa68a8ee472f1d17d4bddc8f28940d36f0c9ab593197"
+    },
+    {
+      "name": "system",
+      "edl_name": "system",
+      "file": "update/system.bin",
+      "offset": 62783488,
+      "size": 71434240,
+      "sha256": "938a31aad0b7e130042b0397d306237830de8784c7e255966360d82257a8e3d9"
+    }
+  ],
+  "compatibility": [
+    {
+      "name": "SBL",
+      "offset": 0,
+      "size": 1310720,
+      "sha256": "42251657c4d75ce0020e39a8205bafdedfb36de467823bd0c99c86b85e8e5496"
+    },
+    {
+      "name": "MIBIB",
+      "offset": 1310720,
+      "size": 1310720,
+      "sha256": "9ca876e1f71eec58643c7bd2aa23094627553aa8ac33836c5241bc2a455e91b8"
+    },
+    {
+      "name": "sec",
+      "offset": 24379392,
+      "size": 524288,
+      "sha256": "043e238a765f7cfbc62596a50e53c8ffb6b188a99357b0ebede251725d67589f"
+    },
+    {
+      "name": "TZ",
+      "offset": 24903680,
+      "size": 1572864,
+      "sha256": "6908e7596d19c9b1e5b0bc4c5337b1b435683ad84903b8bf09ec22668d971186"
+    },
+    {
+      "name": "RPM",
+      "offset": 26476544,
+      "size": 655360,
+      "sha256": "0c5c99a158fb4a1c86ac0bcaa3ab55d8a382a0a9312aedd6cad15d0aa0eccb7f"
+    },
+    {
+      "name": "machine",
+      "offset": 27131904,
+      "size": 655360,
+      "sha256": "152e56baeaace51ee143f9a1b95d3b9d546cb873c259fecdbbb23ffb9d0dd22a"
+    },
+    {
+      "name": "misc",
+      "offset": 34734080,
+      "size": 524288,
+      "sha256": "043e238a765f7cfbc62596a50e53c8ffb6b188a99357b0ebede251725d67589f"
+    }
+  ]
+}

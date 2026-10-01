@@ -1,0 +1,26 @@
+.DS_Store
+.venv/
+__pycache__/
+*.pyc
+sessions/
+backups/
+*.log
+vendor/edl/edl_config.json
+vendor/edl/log.txt
+firmware/update
+dji-fw-manager
+*.bin
+*.mbn
+*.partial
+*.pcap
+*.pcapng
+*.zip
+.env
+.env.*
+*.pem
+*.key
+*.p12
+
+# 本机历史资料与发布产物
+_local/
+dist/

@@ -1,0 +1,342 @@
+--- a/vendor/edl/edl.py
++++ b/vendor/edl/edl.py
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
++# Modified 2026-10-01 for the QDC507 macOS workflow; see the repository NOTICE.md.
+ # (c) B.Kerler 2018-2025 under GPLv3 license
+ # If you use my code, make sure you refer to my name
+ #
+@@ -50,7 +51,7 @@
+     edl.py send <command> [--loader=filename] [--debugmode] [--skipresponse] [--vid=vid] [--pid=pid] [--portname=portname] [--serial]  [--devicemodel=value]
+     edl.py xml <xmlfile> [--loader=filename] [--debugmode] [--skipresponse] [--vid=vid] [--pid=pid] [--skipstorageinit] [--portname=portname] [--serial]  [--devicemodel=value]
+     edl.py rawxml <xmlstring> [--loader=filename] [--debugmode] [--skipresponse] [--vid=vid] [--pid=pid] [--skipstorageinit] [--portname=portname] [--serial]  [--devicemodel=value]
+-    edl.py reset [--resetmode=mode] [--loader=filename] [--debugmode] [--vid=vid] [--pid=pid] [--portname=portname] [--serial] [--devicemodel=value]
++    edl.py reset [--resetmode=mode] [--memory=memtype] [--pagesperblock=number] [--sectorsize==bytes] [--loader=filename] [--debugmode] [--vid=vid] [--pid=pid] [--portname=portname] [--serial] [--devicemodel=value]
+     edl.py nop [--loader=filename] [--debugmode] [--vid=vid] [--pid=pid] [--skipstorageinit] [--portname=portname] [--serial] [--devicemodel=value]
+     edl.py modules <command> <options> [--memory=memtype] [--lun=lun] [--loader=filename] [--debugmode] [--skipresponse] [--vid=vid] [--pid=pid] [--devicemodel=value] [--portname=portname] [--serial]
+     edl.py provision <xmlfile> [--loader=filename] [--debugmode] [--skipresponse] [--vid=vid] [--pid=pid] [--portname=portname] [--serial]  [--devicemodel=value]
+@@ -412,7 +413,7 @@
+         base.run()
+     except KeyboardInterrupt:
+         print("\n[!] Exiting cleanly…")
+-        sys.exit(0)
++        sys.exit(130)
+ 
+ 
+ if __name__ == '__main__':
+--- a/vendor/edl/edlclient/Library/Connection/usblib.py
++++ b/vendor/edl/edlclient/Library/Connection/usblib.py
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
++# Modified 2026-10-01 for the QDC507 macOS workflow; see the repository NOTICE.md.
+ # (c) B.Kerler 2018-2024 under GPLv3 license
+ # If you use my code, make sure you refer to my name
+ #
+@@ -76,7 +77,12 @@
+         self.is_serial = False
+         self.buffer = array.array('B', [0]) * 1048576
+         if sys.platform.startswith('freebsd') or sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+-            self.backend = usb.backend.libusb1.get_backend(find_library=lambda x: "libusb-1.0.so")
++            if sys.platform.startswith('darwin'):
++                library = next((p for p in ('/opt/homebrew/lib/libusb-1.0.dylib',
++                                             '/usr/local/lib/libusb-1.0.dylib') if os.path.exists(p)), None)
++                self.backend = usb.backend.libusb1.get_backend(find_library=lambda x: library)
++            else:
++                self.backend = usb.backend.libusb1.get_backend(find_library=lambda x: "libusb-1.0.so")
+         elif is_windows():
+             self.backend = None
+         if self.backend is not None:
+@@ -348,31 +354,20 @@
+             try:
+                 self.EP_OUT.write(b'')
+             except usb.core.USBError as err:
+-                error = str(err.strerror)
+-                if "timeout" in error:
+-                    # time.sleep(0.01)
+-                    try:
+-                        self.EP_OUT.write(b'')
+-                    except Exception as err:
+-                        self.debug(str(err))
+-                        return False
+-                return True
++                self.debug(str(err))
++                return False
+         else:
+-            i = 0
+             while pos < len(command):
+                 try:
+                     ctr = self.EP_OUT.write(command[pos:pos + pktsize])
+-                    if ctr <= 0:
+-                        self.info(ctr)
+-                    pos += pktsize
++                    if ctr != min(pktsize, len(command) - pos):
++                        self.error("Truncated USB write")
++                        return False
++                    pos += ctr
+                 except Exception as err:
+                     self.debug(str(err))
+-                    # print("Error while writing")
+-                    # time.sleep(0.01)
+-                    i += 1
+-                    if i == 3:
+-                        return False
+-                    pass
++                    # A failed transfer may already have sent bytes. Never replay it.
++                    return False
+         self.verify_data(bytearray(command), "TX:")
+         return True
+ 
+--- a/vendor/edl/edlclient/Library/firehose.py
++++ b/vendor/edl/edlclient/Library/firehose.py
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
++# Modified 2026-10-01 for the QDC507 macOS workflow; see the repository NOTICE.md.
+ # (c) B.Kerler 2018-2024 under GPLv3 license
+ # If you use my code, make sure you refer to my name
+ #
+@@ -19,18 +20,6 @@
+ from edlclient.Library.sparse import QCSparse
+ from edlclient.Library.utils import *
+ from edlclient.Library.utils import progress
+-
+-
+-def writedata(filename, rq):
+-    pos = 0
+-    with open(filename, "wb") as wf:
+-        while True:
+-            data = rq.get()
+-            if data is None:
+-                break
+-            pos += len(data)
+-            wf.write(data)
+-            rq.task_done()
+ 
+ 
+ class response:
+@@ -194,7 +183,6 @@
+         self.luns = luns
+         self.supported_functions = []
+         self.lunsizes = {}
+-        self.rq = Queue()
+         self.info = self.__logger.info
+         self.error = self.__logger.error
+         self.debug = self.__logger.debug
+@@ -239,7 +227,7 @@
+                 return True
+             else:
+                 return False
+-        return True
++        return False
+ 
+     def decoder(self, data):
+         if isinstance(data, bytes) or isinstance(data, bytearray):
+@@ -262,9 +250,13 @@
+         self.cdc.flush()
+         self.cdc.xmlread = True
+         if isinstance(data, bytes) or isinstance(data, bytearray):
+-            self.cdc.write(data[:self.cfg.MaxXMLSizeInBytes])
+-        else:
+-            self.cdc.write(bytes(data, 'utf-8')[:self.cfg.MaxXMLSizeInBytes])
++            payload = data
++        else:
++            payload = bytes(data, 'utf-8')
++        if len(payload) > self.cfg.MaxXMLSizeInBytes:
++            return response(resp=False, error="XML command exceeds target limit")
++        if not self.cdc.write(payload):
++            return response(resp=False, error="XML USB write failed")
+         rdata = bytearray()
+         counter = 0
+         timeout = 3
+@@ -272,7 +264,7 @@
+             while b"<response value" not in rdata:
+                 try:
+                     tmp = self.cdc.read(timeout=None)
+-                    if tmp == b"" in rdata:
++                    if tmp == b"":
+                         counter += 1
+                         time.sleep(0.05)
+                         if counter > timeout:
+@@ -477,6 +469,8 @@
+         if sparse.readheader():
+             sparseformat = True
+             total = sparse.getsize()
++        else:
++            sparse.rf.close()
+         bytestowrite = total
+         progbar = progress(self.cfg.SECTOR_SIZE_IN_BYTES)
+         with open(filename, "rb") as rf:
+@@ -494,6 +488,8 @@
+                    f" physical_partition_number=\"{physical_partition_number}\"" + \
+                    f" start_sector=\"{start_sector}\""
+             data += self.nand_pages_attr() + " "
++            if self.cfg.MemoryName.lower() == "nand":
++                data += f'last_sector="{start_sector + num_partition_sectors - 1}" '
+             if self.modules is not None:
+                 data += self.modules.addprogram()
+             data += f"/>\n</data>"
+@@ -507,6 +503,9 @@
+                         wdata = sparse.read(wlen)
+                     else:
+                         wdata = rf.read(wlen)
++                    if len(wdata) != wlen:
++                        self.error("Input file ended before the declared payload")
++                        return False
+                     bytestowrite -= wlen
+ 
+                     if wlen % self.cfg.SECTOR_SIZE_IN_BYTES != 0:
+@@ -514,9 +513,13 @@
+                                   self.cfg.SECTOR_SIZE_IN_BYTES
+                         wdata += b"\x00" * (filllen - wlen)
+ 
+-                    self.cdc.write(wdata)
++                    if not self.cdc.write(wdata):
++                        self.error("USB write failed")
++                        return False
+                     progbar.show_progress(prefix="Write", pos=total - bytestowrite, total=total, display=display)
+-                    self.cdc.write(b'')
++                    if not self.cdc.write(b''):
++                        self.error("USB zero-length write failed")
++                        return False
+                 # time.sleep(0.2)
+ 
+                 wd = self.wait_for_data()
+@@ -531,6 +534,9 @@
+                 else:
+                     self.error(f"Error:{rsp}")
+                     return False
++            else:
++                self.error(f"Program command rejected: {rsp.error}")
++                return False
+         return True
+ 
+     def cmd_program_buffer(self, physical_partition_number, start_sector, wfdata, display=True):
+@@ -604,6 +610,8 @@
+                    f" physical_partition_number=\"{physical_partition_number}\"" + \
+                    f" start_sector=\"{start_sector}\""
+             data += self.nand_pages_attr() + " "
++            if self.cfg.MemoryName.lower() == "nand":
++                data += f'last_sector="{start_sector + num_partition_sectors - 1}" '
+             if self.modules is not None:
+                 data += self.modules.addprogram()
+             data += f"/>\n</data>"
+@@ -611,6 +619,10 @@
+             if rsp.resp:
+                 return True
+             self.error(f"Error:{rsp.error}")
++            return False
++
++        if self.cfg.MemoryName.lower() == "nand":
++            self.error("NAND requires native erase support; zero-fill is not an erase")
+             return False
+ 
+         data = f"<?xml version=\"1.0\" ?><data>\n" + \
+@@ -671,49 +683,46 @@
+         data += self.nand_pages_attr() + "/>\n</data>"
+ 
+         rsp = self.xmlsend(data, self.skipresponse)
+-        self.cdc.xmlread = False
+-        time.sleep(0.01)
+         if not rsp.resp:
+             if display:
+                 self.error(rsp.error)
+-            return b""
+-        else:
+-            bytestoread = self.cfg.SECTOR_SIZE_IN_BYTES * num_partition_sectors
+-            total = bytestoread
+-            show_progress = progbar.show_progress
+-            usb_read = self.cdc.read
+-            progbar.show_progress(prefix="Read", pos=0, total=total, display=display)
+-            worker = Thread(target=writedata, args=(filename, self.rq), daemon=True)
+-            worker.start()
+-            while bytestoread > 0:
+-                if self.cdc.is_serial:
+-                    maxsize = self.cfg.MaxPayloadSizeFromTargetInBytes
+-                else:
+-                    maxsize = 5 * 1024 * 1024
+-                size = min(maxsize, bytestoread)
+-                data = usb_read(size)
+-                if len(data) > 0:
+-                    self.rq.put(data)
++            return False
++        total = self.cfg.SECTOR_SIZE_IN_BYTES * num_partition_sectors
++        bytestoread = total
++        self.cdc.xmlread = False
++        try:
++            with open(filename, "wb") as wf:
++                deadline = time.monotonic() + 30
++                while bytestoread > 0:
++                    maxsize = self.cfg.MaxPayloadSizeFromTargetInBytes if self.cdc.is_serial else 1024 * 1024
++                    data = self.cdc.read(min(maxsize, bytestoread))
++                    if not data:
++                        if time.monotonic() >= deadline:
++                            self.error("USB read made no progress for 30 seconds")
++                            return False
++                        time.sleep(0.01)
++                        continue
++                    if len(data) > bytestoread:
++                        self.error("USB read exceeded the requested range")
++                        return False
++                    if wf.write(data) != len(data):
++                        self.error("Truncated disk write")
++                        return False
+                     bytestoread -= len(data)
+-                    show_progress(prefix="Read", pos=total - bytestoread, total=total, display=display)
+-            self.rq.put(None)
+-            worker.join(60)
++                    deadline = time.monotonic() + 30
++                    progbar.show_progress(prefix="Read", pos=total - bytestoread, total=total, display=display)
++                wf.flush()
++                os.fsync(wf.fileno())
++        except OSError as error:
++            self.error(f"Readback file/USB failure: {error}")
++            return False
++        finally:
+             self.cdc.xmlread = True
+-            wd = self.wait_for_data()
+-            info = self.xml.getlog(wd)
+-            rsp = self.xml.getresponse(wd)
+-            if "value" in rsp:
+-                if rsp["value"] != "ACK":
+-                    if bytestoread != 0:
+-                        self.error(f"Error:")
+-                        for line in info:
+-                            self.error(line)
+-                            self.lasterror += bytes(line + "\n", "utf-8")
+-                    return False
+-            else:
+-                if display:
+-                    self.error(f"Error:{rsp[2]}")
+-                    return False
++        wd = self.wait_for_data()
++        rsp = self.xml.getresponse(wd)
++        if rsp.get("value") != "ACK":
++            self.error(f"Read completion was not ACK: {rsp}")
++            return False
+         return True
+ 
+     def cmd_read_buffer(self, physical_partition_number, start_sector, num_partition_sectors, display=True):
+--- a/vendor/edl/edlclient/Library/firehose_client.py
++++ b/vendor/edl/edlclient/Library/firehose_client.py
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
++# Modified 2026-10-01 for the QDC507 macOS workflow; see the repository NOTICE.md.
+ # (c) B.Kerler 2018-2024 under GPLv3 license
+ # If you use my code, make sure you refer to my name
+ #
+@@ -362,6 +363,12 @@
+                             if self.firehose.cmd_read(lun, 0, totalsectors, sfilename):
+                                 self.printer(
+                                     f"Dumped sector 0 with sector count {str(totalsectors)} as {filename}.")
++                            else:
++                                return False
++                        else:
++                            return False
++                    return True
++                return False
+             else:
+                 luns = self.getluns(options)
+                 for lun in luns:

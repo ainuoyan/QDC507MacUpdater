@@ -1,0 +1,309 @@
+{
+  "source_image": "canghaiwuhen/dji-qdc507-firmware-manager:0.1.0",
+  "platform_manifest": "sha256:c087fab8bfab282b04265e6ce9e2da753819d4956ecc15e82d1ecf8ecb1b34a2",
+  "source_layer": "sha256:be017854d032974f07885290ffc4082d8f2955245cefe178c675e4b2af8b000b",
+  "upstream": "https://github.com/bkerler/edl",
+  "upstream_commit": "not recorded in source image",
+  "files": [
+    {
+      "file": "edl.py",
+      "image_source_sha256": "5f21c6d97dcbcc32c32d47330a4ccec12c0c6739f15c922887792d4b4f2bf01b",
+      "release_sha256": "29b83f1962db379795b8c44e69e6123d865ed304c614649fbca3c5587ac0d458",
+      "modified": true
+    },
+    {
+      "file": "README.md",
+      "image_source_sha256": "aadec45d542903ddc968241040e0516e1d2a5963c77d93d1653f9c790b28d9f2",
+      "release_sha256": "aadec45d542903ddc968241040e0516e1d2a5963c77d93d1653f9c790b28d9f2",
+      "modified": false
+    },
+    {
+      "file": "LICENSE",
+      "image_source_sha256": "f8ab5d5accbd682b0b87a8711353a64939edeca847960162250c5ba0cddc4926",
+      "release_sha256": "f8ab5d5accbd682b0b87a8711353a64939edeca847960162250c5ba0cddc4926",
+      "modified": false
+    },
+    {
+      "file": "pyproject.toml",
+      "image_source_sha256": "da8855a4db672fb6cec6a70fde76e84d8086d8cc6520c9b2d934451b415abb49",
+      "release_sha256": "da8855a4db672fb6cec6a70fde76e84d8086d8cc6520c9b2d934451b415abb49",
+      "modified": false
+    },
+    {
+      "file": "requirements.txt",
+      "image_source_sha256": "4f0006c5bd07073d3c545968f38c1aa0e3f92a798256dce7fd4bc06a881cdce1",
+      "release_sha256": "4f0006c5bd07073d3c545968f38c1aa0e3f92a798256dce7fd4bc06a881cdce1",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Config/__init__.py",
+      "image_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "release_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Config/qualcomm_config.py",
+      "image_source_sha256": "790838286d29525aae198d3c223bf041e809df0a6b99563fbd6f6b4519c7dce8",
+      "release_sha256": "790838286d29525aae198d3c223bf041e809df0a6b99563fbd6f6b4519c7dce8",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Config/usb_ids.py",
+      "image_source_sha256": "9e5e4db741a17e2980c1e966153ef2b3dce890c79e6b904fe28ed1231997413b",
+      "release_sha256": "9e5e4db741a17e2980c1e966153ef2b3dce890c79e6b904fe28ed1231997413b",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Connection/__init__.py",
+      "image_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "release_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Connection/devicehandler.py",
+      "image_source_sha256": "4e19a0e5af4278c4c94e0e85473ae7380e1a8a2aab28007a8423b5a1fc4d4bb9",
+      "release_sha256": "4e19a0e5af4278c4c94e0e85473ae7380e1a8a2aab28007a8423b5a1fc4d4bb9",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Connection/seriallib.py",
+      "image_source_sha256": "5fc9b3c4ac37c0e4c3a11239f9a244b62c4060293e6041d21b4dd5a11fc7b6f9",
+      "release_sha256": "5fc9b3c4ac37c0e4c3a11239f9a244b62c4060293e6041d21b4dd5a11fc7b6f9",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Connection/usblib.py",
+      "image_source_sha256": "7f56d33fce8bdf5028598841f7298fbf16e26156c4f65288eb9eee5be1cf9208",
+      "release_sha256": "827a2dd94e52fd20593fc7a7a400f7970a1b118745f6f2e423d7581d1cb9b719",
+      "modified": true
+    },
+    {
+      "file": "edlclient/Library/Connection/usbscsi.py",
+      "image_source_sha256": "8ca3ec4d150edf38c77db1f896e2a1cb48cea50639f0298bbf9e423b81b598f4",
+      "release_sha256": "8ca3ec4d150edf38c77db1f896e2a1cb48cea50639f0298bbf9e423b81b598f4",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Modules/__init__.py",
+      "image_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "release_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Modules/generic.py",
+      "image_source_sha256": "1bc4722d668ecbb532afcb156cd944a8282918de8a3d44df10c1d52c375c3c01",
+      "release_sha256": "1bc4722d668ecbb532afcb156cd944a8282918de8a3d44df10c1d52c375c3c01",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Modules/init.py",
+      "image_source_sha256": "f81691ba81bd2f3f607baa690eca597de76672737e2936984204cab49b63693e",
+      "release_sha256": "f81691ba81bd2f3f607baa690eca597de76672737e2936984204cab49b63693e",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Modules/nothing.py",
+      "image_source_sha256": "5cc7920f1ff2d6ca4df31009127720c883df7fc198ce6a8963c8369c2dbaba28",
+      "release_sha256": "5cc7920f1ff2d6ca4df31009127720c883df7fc198ce6a8963c8369c2dbaba28",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Modules/oneplus.py",
+      "image_source_sha256": "44e1e67d3a11c8b12866f96f95ead039ebcb3a232813d01d36aa9523d0c0f821",
+      "release_sha256": "44e1e67d3a11c8b12866f96f95ead039ebcb3a232813d01d36aa9523d0c0f821",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Modules/oneplus_param.py",
+      "image_source_sha256": "856d3f9ffe7ecd35cef81abc964e13b74abce2473300d0fec339bb2db5fec265",
+      "release_sha256": "856d3f9ffe7ecd35cef81abc964e13b74abce2473300d0fec339bb2db5fec265",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/Modules/xiaomi.py",
+      "image_source_sha256": "53c50cc722d3d356496bafb67dbfe10586c98bb56520d95ee7ea4b7f0fcf3189",
+      "release_sha256": "53c50cc722d3d356496bafb67dbfe10586c98bb56520d95ee7ea4b7f0fcf3189",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/__init__.py",
+      "image_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "release_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/api.py",
+      "image_source_sha256": "e561cb9ca6a027aef1cf3e256216fd9cd8932618aff3bccc2240e0fab63e9c0f",
+      "release_sha256": "e561cb9ca6a027aef1cf3e256216fd9cd8932618aff3bccc2240e0fab63e9c0f",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/asmtools.py",
+      "image_source_sha256": "fc094bbc30a72019aacdbed18c72f0055a048a9833a231b2e7f7220c83a5300e",
+      "release_sha256": "fc094bbc30a72019aacdbed18c72f0055a048a9833a231b2e7f7220c83a5300e",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/cryptutils.py",
+      "image_source_sha256": "928a11efda0db803e1cd686bfada3b6ab0f7a5dd3e9fb5698e4fe7cabc60bab6",
+      "release_sha256": "928a11efda0db803e1cd686bfada3b6ab0f7a5dd3e9fb5698e4fe7cabc60bab6",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/firehose.py",
+      "image_source_sha256": "92b8a69c1175673ba7cd56819d8f7d070c603a75057ea65c1b2af2404b743306",
+      "release_sha256": "97a0ad6f92f5dde54cccdf53a3f1b3cd7cf6e3b58ab0e930dd280a267180f3ab",
+      "modified": true
+    },
+    {
+      "file": "edlclient/Library/firehose_client.py",
+      "image_source_sha256": "dd8bcbac682a8c3767792e53bf54199ebd89651a71a0a1db0bdb054a0c88be43",
+      "release_sha256": "b809fb41bdb5020941ebc2236a938cd72856d43e53e79e973fc5133d62695c9f",
+      "modified": true
+    },
+    {
+      "file": "edlclient/Library/gpt.py",
+      "image_source_sha256": "290c330b0f89303e8da58a1e04e9b68fe432e0ef898207740a4981f628b95372",
+      "release_sha256": "290c330b0f89303e8da58a1e04e9b68fe432e0ef898207740a4981f628b95372",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/hdlc.py",
+      "image_source_sha256": "268805ef1a9b499c2fcfa325c24b5a81ac296004d096ae4e4434a216bdc0f49e",
+      "release_sha256": "268805ef1a9b499c2fcfa325c24b5a81ac296004d096ae4e4434a216bdc0f49e",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/loader_db.py",
+      "image_source_sha256": "4202c21e1adb645c86b2b1f95c37b0b89aa664d8b708b402d2fda815300740a2",
+      "release_sha256": "4202c21e1adb645c86b2b1f95c37b0b89aa664d8b708b402d2fda815300740a2",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/memparse.py",
+      "image_source_sha256": "df43360007019d45ed86fa1812e8179f5185278d0de47921f6b8264e1a6a41b9",
+      "release_sha256": "df43360007019d45ed86fa1812e8179f5185278d0de47921f6b8264e1a6a41b9",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/nand_config.py",
+      "image_source_sha256": "048f95b09febab968a96c8fc4775eb6907ba7246237ce609fda835788e9c0bc1",
+      "release_sha256": "048f95b09febab968a96c8fc4775eb6907ba7246237ce609fda835788e9c0bc1",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/pt.py",
+      "image_source_sha256": "b7965d95dce06264f4013873852eafdb1cf168dbb872cf4e98b2e04cc6b891ae",
+      "release_sha256": "b7965d95dce06264f4013873852eafdb1cf168dbb872cf4e98b2e04cc6b891ae",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/pt64.py",
+      "image_source_sha256": "8501e7675fd529d9f24f74bb065c3212f018eeaf30e393f5322868b71c25c50b",
+      "release_sha256": "8501e7675fd529d9f24f74bb065c3212f018eeaf30e393f5322868b71c25c50b",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/sahara.py",
+      "image_source_sha256": "297b1b8fc2150200f50c71c43444f39472410810ec5b81c569040ef2a9799955",
+      "release_sha256": "297b1b8fc2150200f50c71c43444f39472410810ec5b81c569040ef2a9799955",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/sahara_defs.py",
+      "image_source_sha256": "b36c9555e0966db1f47293b72bb61b743b1e3490eb08ca09226b2df750bffc3e",
+      "release_sha256": "b36c9555e0966db1f47293b72bb61b743b1e3490eb08ca09226b2df750bffc3e",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/sparse.py",
+      "image_source_sha256": "a09333851e7cf4642e60e532eadcb7ea3ef3966e00bc678ce8faeac32bf2214b",
+      "release_sha256": "a09333851e7cf4642e60e532eadcb7ea3ef3966e00bc678ce8faeac32bf2214b",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/streaming.py",
+      "image_source_sha256": "2c2083a8ad894162b10fefefa30e28dca8c64df038f8b4952faace78ac80ec04",
+      "release_sha256": "2c2083a8ad894162b10fefefa30e28dca8c64df038f8b4952faace78ac80ec04",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/streaming_client.py",
+      "image_source_sha256": "4850d1c847bbc85e69f409d3bad6ee9a90d87c0813495498a580069c94af8b95",
+      "release_sha256": "4850d1c847bbc85e69f409d3bad6ee9a90d87c0813495498a580069c94af8b95",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/streaming_defs.py",
+      "image_source_sha256": "a4628e1c8bd48e73a424baa6778bc91ff46edd870a4f80e265ec03b9f39184d2",
+      "release_sha256": "a4628e1c8bd48e73a424baa6778bc91ff46edd870a4f80e265ec03b9f39184d2",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/utils.py",
+      "image_source_sha256": "e942b616cdf4fcdc98bf0577dd6deb98b2093d81ef8f0e6353619de2df74cc15",
+      "release_sha256": "e942b616cdf4fcdc98bf0577dd6deb98b2093d81ef8f0e6353619de2df74cc15",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Library/xmlparser.py",
+      "image_source_sha256": "24f8e763bd529d7890e5309dcba1f066907d84595564a9315a41acccfc986be9",
+      "release_sha256": "24f8e763bd529d7890e5309dcba1f066907d84595564a9315a41acccfc986be9",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Tools/__init__.py",
+      "image_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "release_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Tools/beagle_to_loader.py",
+      "image_source_sha256": "18b381ef274f613ab853dcb313414490ec3f3b10c8a23f9be1f691586d9fd12e",
+      "release_sha256": "18b381ef274f613ab853dcb313414490ec3f3b10c8a23f9be1f691586d9fd12e",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Tools/boottodwnload.py",
+      "image_source_sha256": "87857a6c45ba6149dd5c7248b5c6cfaf4a4bf38f2124f83d28a163df1bfb87af",
+      "release_sha256": "87857a6c45ba6149dd5c7248b5c6cfaf4a4bf38f2124f83d28a163df1bfb87af",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Tools/enableadb.py",
+      "image_source_sha256": "f8ef971fcceb7f96bfb369a74dbdbb99f54993e38ab4bba2c09495be898c915b",
+      "release_sha256": "f8ef971fcceb7f96bfb369a74dbdbb99f54993e38ab4bba2c09495be898c915b",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Tools/fhloaderparse.py",
+      "image_source_sha256": "706b13a38ca0fbf3c211cea4fa1ca2fa6c1e216fca55d2ca7e2609b793b49751",
+      "release_sha256": "706b13a38ca0fbf3c211cea4fa1ca2fa6c1e216fca55d2ca7e2609b793b49751",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Tools/qc_diag.py",
+      "image_source_sha256": "5933d54791225028932736b5fa59cfd73e2bfe21b79bed5b4715bdc58f1a6e70",
+      "release_sha256": "5933d54791225028932736b5fa59cfd73e2bfe21b79bed5b4715bdc58f1a6e70",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Tools/sierrakeygen.py",
+      "image_source_sha256": "4ed6e2397475526814ca09b5c2e1ea63a38d85280b0f90f086fd5c5437718799",
+      "release_sha256": "4ed6e2397475526814ca09b5c2e1ea63a38d85280b0f90f086fd5c5437718799",
+      "modified": false
+    },
+    {
+      "file": "edlclient/Tools/txt_to_loader.py",
+      "image_source_sha256": "1d14483512941c2edb3bd95e8c4994f51f755571c3d902c7a52e30fe70f25a02",
+      "release_sha256": "1d14483512941c2edb3bd95e8c4994f51f755571c3d902c7a52e30fe70f25a02",
+      "modified": false
+    },
+    {
+      "file": "edlclient/__init__.py",
+      "image_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "release_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified": false
+    }
+  ]
+}

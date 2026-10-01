@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+task_root="$(cd "$(dirname "$0")" && pwd)"
+if [[ ! -x "$task_root/.venv/bin/python" ]]; then
+  echo '请先运行 ./setup.sh。' >&2
+  exit 1
+fi
+exec "$task_root/.venv/bin/python" "$task_root/qdc507.py" "$@"

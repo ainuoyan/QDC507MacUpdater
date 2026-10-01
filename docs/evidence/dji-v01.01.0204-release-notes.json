@@ -1,0 +1,17 @@
+{
+  "source": "White-Alone 原文中的 DJI 遥控器升级固件配图",
+  "displayed_component": "DJI 增强图传模块",
+  "displayed_version": "V01.01.0204",
+  "displayed_release_note": "支持 APN 自适应，并解决部分专网 SIM 卡适配问题。",
+  "image_file": "dji-v01.01.0204-release-notes.png",
+  "published_image_sha256": "46e685eaa87fefe8ed7a32f840b0d43546c351f670e77fb2be89a270539952b9",
+  "metadata_processing": "仅去除 PNG 的 eXIf 附加元数据；IHDR、IDAT 等图像内容块保持原样。",
+  "limitations": "照片未显示固件发布日期、具体适配卡种或 MBIM 修复说明；85% 为照片中的更新进度，不是本工具的升级结果。",
+  "source_author": "White-Alone",
+  "source_article_url": "https://blog.white-alone.com/posts/%E5%A4%A7%E7%96%864G%E6%A8%A1%E7%BB%84%E5%92%8C%E9%97%B2%E9%B1%BC%E4%BC%AA%E5%9F%BA%E7%AB%99%E4%BA%8C%E4%B8%89%E4%BA%8B",
+  "source_image_url": "https://raw.githubusercontent.com/white-alone/blog_img/master/%E5%A4%A7%E7%96%864G%E6%A8%A1%E7%BB%84%E5%92%8C%E9%97%B2%E9%B1%BC%E4%BC%AA%E5%9F%BA%E7%AB%99%E4%BA%8C%E4%B8%89%E4%BA%8B/1785307347818.png",
+  "verified_source_on": "2026-10-01",
+  "hash_scope": "source_copy_sha256 为引用副本处理前的哈希；published_image_sha256 为去除 EXIF 后的副本哈希，不声称为远程原图哈希。",
+  "copyright": "图片及设备界面文字、标识的权利归原作者及相应权利人，不适用本项目代码的 GPLv3 授权。",
+  "source_copy_sha256": "1f758d33560fd78516131809c9981180e45f07e274cb08a7e22e87f53c272b9d"
+}
